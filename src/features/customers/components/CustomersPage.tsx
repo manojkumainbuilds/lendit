@@ -1,3 +1,4 @@
+import { searchCustomers } from '../utils/customerSearch'
 import { useEffect, useMemo, useState } from 'react'
 import { Badge } from '../../../components/ui/Badge'
 import { Button } from '../../../components/ui/Button'
@@ -23,7 +24,10 @@ export function CustomersPage({ onNavigate }: { onNavigate: (path: string) => vo
 
   useEffect(() => { void load() }, [])
 
-  const filtered = useMemo(() => customers.filter((customer) => `${customer.fullName} ${customer.customerNumber} ${customer.phone}`.toLowerCase().includes(query.toLowerCase())), [customers, query])
+  const filtered = useMemo(
+    () => searchCustomers(customers, query),
+    [customers, query]
+  )
 
   return (
     <div className="page-stack">
@@ -39,7 +43,7 @@ export function CustomersPage({ onNavigate }: { onNavigate: (path: string) => vo
         <div className="card-header"><div><h2>Customer directory</h2><p>Search by name, customer number, or phone.</p></div><button className="icon-button" aria-label="Refresh customers" onClick={() => void load()}><Icon name="refresh" /></button></div>
         <div className="table-toolbar"><label className="search-field"><Icon name="search" size={17} /><input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Search customers" aria-label="Search customers" /></label><span className="result-count">{loading ? 'Loading' : `${filtered.length} result${filtered.length === 1 ? '' : 's'}`}</span></div>
         {loading ? <LoadingState label="Loading customers..." /> : error ? <ErrorState onRetry={() => void load()} /> : filtered.length === 0 ? <EmptyState title="No customers found" description="Try a different search term." /> : (
-          <div className="table-wrap"><table><thead><tr><th>Customer</th><th>Type</th><th>Status</th><th>Outstanding</th><th>Created</th><th aria-label="Actions" /></tr></thead><tbody>{filtered.map((customer) => <tr key={customer.id} onDoubleClick={() => onNavigate(`/customers/${customer.id}`)}><td><div className="person-cell"><div className="avatar avatar-small">{customer.fullName.split(' ').map((part) => part[0]).slice(0,2).join('')}</div><div><strong>{customer.fullName}</strong><span>{customer.customerNumber}</span></div></div></td><td className="capitalize">{customer.type}</td><td><Badge tone={statusTone[customer.status]}>{customer.status}</Badge></td><td>{formatCurrency(customer.outstanding)}</td><td>{formatDate(customer.createdAt)}</td><td><button className="text-button" onClick={() => onNavigate(`/customers/${customer.id}`)}>View</button></td></tr>)}</tbody></table></div>
+          <div className="table-wrap"><table><thead><tr><th>Customer</th><th>Type</th><th>Status</th><th>Outstanding</th><th>Created</th><th aria-label="Actions" /></tr></thead><tbody>{filtered.map((customer) => <tr key={customer.id} onDoubleClick={() => onNavigate(`/customers/${customer.id}`)}><td><div className="person-cell"><div className="avatar avatar-small">{customer.fullName.split(' ').map((part) => part[0]).slice(0, 2).join('')}</div><div><strong>{customer.fullName}</strong><span>{customer.customerNumber}</span></div></div></td><td className="capitalize">{customer.type}</td><td><Badge tone={statusTone[customer.status]}>{customer.status}</Badge></td><td>{formatCurrency(customer.outstanding)}</td><td>{formatDate(customer.createdAt)}</td><td><button className="text-button" onClick={() => onNavigate(`/customers/${customer.id}`)}>View</button></td></tr>)}</tbody></table></div>
         )}
       </Card>
       <p className="helper-note">Tip: open a customer by pressing <kbd>Tab</kbd> to the View action or double-clicking a row.</p>
