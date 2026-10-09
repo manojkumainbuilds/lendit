@@ -5,11 +5,18 @@ html { min-width: 320px; background: var(--color-bg); }
 body { margin: 0; font-family: var(--font-sans); color: var(--color-text); background: var(--color-bg); -webkit-font-smoothing: antialiased; }
 button, input { font: inherit; }
 button { cursor: pointer; }
-button:focus-visible, input:focus-visible { outline: 3px solid var(--color-primary-100); outline-offset: 2px; }
+button:focus-visible, input:focus-visible { outline: 3px solid var(--color-focus-ring); outline-offset: 2px; }
 
 .app-shell { min-height: 100vh; display: flex; }
 .sidebar { position: fixed; inset: 0 auto 0 0; width: 244px; display: flex; flex-direction: column; padding: var(--space-5); background: var(--color-surface); border-right: 1px solid var(--color-border); z-index: 20; }
-.brand { display: flex; align-items: center; gap: var(--space-3); padding: 4px 6px 20px; color: var(--color-heading); }
+.brand {
+  width: 100%;
+  border: 0;
+  background: transparent;
+  text-align: left;
+  font: inherit;
+  cursor: pointer;
+display: flex; align-items: center; gap: var(--space-3); padding: 4px 6px 20px; color: var(--color-heading); }
 .brand-mark { width: 34px; height: 34px; display: grid; place-items: center; border-radius: 10px; background: var(--color-primary-600); color: white; font-weight: 800; }
 .brand strong, .brand span { display: block; }
 .brand strong { font-size: 15px; }
@@ -17,13 +24,13 @@ button:focus-visible, input:focus-visible { outline: 3px solid var(--color-prima
 .nav { display: grid; gap: 3px; margin-top: 6px; }
 .nav-item { width: 100%; display: flex; align-items: center; gap: 11px; border: 0; background: transparent; color: var(--color-text-muted); border-radius: var(--radius-sm); padding: 10px 12px; text-align: left; font-size: 13px; }
 .nav-item:hover { background: var(--color-surface-subtle); color: var(--color-heading); }
-.nav-item-active { background: var(--color-primary-50); color: var(--color-primary-700); font-weight: 700; }
+.nav-item-active { background: var(--color-primary-text); color: var(--color-primary-700); font-weight: 700; }
 .sidebar-footer { margin-top: auto; border-top: 1px solid var(--color-border); padding-top: 16px; }
 .user-chip { display: flex; align-items: center; gap: 10px; padding: 8px; }
 .user-chip strong, .user-chip span { display: block; }
 .user-chip strong { font-size: 12px; color: var(--color-heading); }
 .user-chip span { font-size: 11px; color: var(--color-text-muted); margin-top: 2px; }
-.avatar { width: 32px; height: 32px; border-radius: 50%; background: var(--color-primary-100); color: var(--color-primary-700); display: grid; place-items: center; font-weight: 800; font-size: 11px; flex: 0 0 auto; }
+.avatar { width: 32px; height: 32px; border-radius: 50%; background: var(--color-primary-100); color: var(--color-primary-text); display: grid; place-items: center; font-weight: 800; font-size: 11px; flex: 0 0 auto; }
 .avatar-small { width: 30px; height: 30px; }
 .avatar-large { width: 52px; height: 52px; font-size: 16px; }
 
@@ -37,7 +44,7 @@ button:focus-visible, input:focus-visible { outline: 3px solid var(--color-prima
 .content { max-width: 1440px; margin: 0 auto; padding: 30px; }
 .page-stack { display: grid; gap: 20px; }
 .page-heading { display: flex; justify-content: space-between; align-items: end; gap: 24px; }
-.eyebrow { margin: 0 0 6px; color: var(--color-primary-600); font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: .07em; }
+.eyebrow { margin: 0 0 6px; color: var(--color-primary-text); font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: .07em; }
 h1, h2 { margin: 0; color: var(--color-heading); }
 h1 { font-size: clamp(28px, 3vw, 36px); line-height: 1.1; letter-spacing: -.03em; }
 h2 { font-size: 15px; }
@@ -93,7 +100,7 @@ tbody tr:hover { background: var(--color-surface-subtle); }
 .badge-danger { color: var(--color-danger); background: var(--color-danger-bg); }
 .badge-info { color: var(--color-info); background: var(--color-info-bg); }
 .badge-neutral { color: var(--color-text-muted); background: var(--color-surface-subtle); }
-.text-button { padding: 0; border: 0; background: none; color: var(--color-primary-600); font-size: 12px; font-weight: 800; }
+.text-button { padding: 0; border: 0; background: none; color: var(--color-primary-text); font-size: 12px; font-weight: 800; }
 .text-button:hover { text-decoration: underline; }
 .helper-note { margin: 0; }
 kbd { padding: 1px 5px; border: 1px solid var(--color-border); border-radius: 4px; background: var(--color-surface); font-family: var(--font-mono); font-size: 10px; }
