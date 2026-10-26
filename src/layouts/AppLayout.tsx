@@ -5,7 +5,17 @@ import type { ReactNode } from 'react'
 
 type Theme = 'light' | 'dark'
 
-export function AppLayout({ currentPath, onNavigate, children }: { currentPath: string; onNavigate: (path: string) => void; children: ReactNode }) {
+export function AppLayout({
+  currentPath,
+  onNavigate,
+  onLogout,
+  children,
+}: {
+  currentPath: string
+  onNavigate: (path: string) => void
+  onLogout: () => void
+  children: ReactNode
+}) {
   const [theme, setTheme] = useState<Theme>(() => {
     const savedTheme = localStorage.getItem('lendit-theme')
     return savedTheme === 'dark' ? 'dark' : 'light'
@@ -53,7 +63,24 @@ export function AppLayout({ currentPath, onNavigate, children }: { currentPath: 
         <nav className="nav" aria-label="Primary navigation">
           {navItems.map((item) => <button key={item.path} className={`nav-item ${isActive(item.path) ? 'nav-item-active' : ''}`} onClick={() => navigate(item.path)}><Icon name={item.icon} /><span>{item.label}</span></button>)}
         </nav>
-        <div className="sidebar-footer"><div className="user-chip"><div className="avatar">MM</div><div><strong>Manoj</strong><span>Administrator</span></div></div></div>
+        <div className="sidebar-footer">
+          <div className="user-chip">
+            <div className="avatar">MM</div>
+            <div>
+              <strong>Manoj</strong>
+              <span>Administrator</span>
+            </div>
+          </div>
+
+          <button
+            type="button"
+            className="nav-item logout-button"
+            onClick={onLogout}
+          >
+            <Icon name = "arrow-right" />
+            <span>Sign out</span>
+          </button>
+        </div>
       </aside>
 
       <div className="main-shell">
