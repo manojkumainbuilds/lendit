@@ -43,8 +43,26 @@ export function CustomerDetailPage({
   }
 
   useEffect(() => {
-    void load()
-  }, [load])
+    let cancelled = false
+
+    void getCustomerById(id)
+      .then((data) => {
+        if (cancelled) return
+        setCustomer(data)
+        setLoadedId(id)
+        setError(false)
+      })
+      .catch(() => {
+        if (!cancelled) setError(true)
+      })
+      .finally(() => {
+        if (!cancelled) setLoading(false)
+      })
+
+    return () => {
+      cancelled = true
+    }
+  }, [id])
 
   if (error) return <ErrorState onRetry={handleRetry} />
 
