@@ -36,8 +36,25 @@ export function CustomersPage({ onNavigate }: { onNavigate: (path: string) => vo
   }
 
   useEffect(() => {
-    void load()
-  }, [load])
+    let cancelled = false
+
+    void listCustomers()
+      .then((data) => {
+        if (cancelled) return
+        setCustomers(data)
+        setError(false)
+      })
+      .catch(() => {
+        if (!cancelled) setError(true)
+      })
+      .finally(() => {
+        if (!cancelled) setLoading(false)
+      })
+
+    return () => {
+      cancelled = true
+    }
+  }, [])
 
   const filtered = useMemo(
     () => searchCustomers(customers, query),
