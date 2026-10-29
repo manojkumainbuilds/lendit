@@ -1,4 +1,3 @@
-
 import { apiRequest } from "../../../services/apiClient";
 import type { Customer, CustomerStatus } from "../../../types/domain";
 
@@ -22,7 +21,7 @@ interface FrappeDocumentResponse {
 }
 
 export interface CustomerInput {
-  customerNumber: string;
+  customerNumber?: string;
   fullName: string;
   type: "individual" | "business";
   phone?: string;
@@ -57,10 +56,6 @@ function toCustomer(record: FrappeCustomer): Customer {
 }
 
 function toFrappePayload(input: CustomerInput) {
-  if (!input.customerNumber.trim()) {
-    throw new Error("Customer number is required.");
-  }
-
   if (!input.fullName.trim()) {
     throw new Error("Customer name is required.");
   }
@@ -72,7 +67,9 @@ function toFrappePayload(input: CustomerInput) {
   }
 
   return {
-    customer_number: input.customerNumber.trim(),
+    ...(input.customerNumber?.trim()
+      ? { customer_number: input.customerNumber.trim() }
+      : {}),
     customer_name: input.fullName.trim(),
     customer_type: input.type === "business" ? "Business" : "Individual",
     phone: input.phone?.trim() ?? "",
@@ -105,9 +102,7 @@ export async function getCustomerById(
   return response.data ? toCustomer(response.data) : undefined;
 }
 
-export async function createCustomer(
-  input: CustomerInput,
-): Promise<Customer> {
+export async function createCustomer(input: CustomerInput): Promise<Customer> {
   const response = await apiRequest<FrappeDocumentResponse>(
     "/api/resource/Customer",
     {

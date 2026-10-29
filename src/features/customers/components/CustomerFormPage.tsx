@@ -180,19 +180,20 @@ export function CustomerFormPage({ id, onNavigate }: CustomerFormPageProps) {
           </div>
 
           <div className="form-grid">
-            <label className="form-field">
-              <span>Customer number *</span>
-              <input
-                name="customerNumber"
-                value={values.customerNumber}
-                onChange={(event) => updateField('customerNumber', event.target.value)}
-                placeholder="e.g. CUS-0004"
-                maxLength={140}
-                autoComplete="off"
-                required
-              />
-              <small>Must be unique.</small>
-            </label>
+            {id && (
+              <label className="form-field">
+                <span>Customer number</span>
+                <input
+                  name="customerNumber"
+                  value={values.customerNumber}
+                  readOnly
+                  aria-readonly="true"
+                />
+                <small>
+                  Assigned by the system. Customer numbers cannot be changed.
+                </small>
+              </label>
+            )}
 
             <label className="form-field">
               <span>Customer name *</span>
