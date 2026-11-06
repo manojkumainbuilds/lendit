@@ -166,7 +166,7 @@ export function CustomersPage({
             />
           </label>
 
-          <label>
+          <label className="form-field">
             Status
             <select
               value={statusFilter}
@@ -181,7 +181,7 @@ export function CustomersPage({
             </select>
           </label>
 
-          <label>
+          <label className="form-field">
             Customer type
             <select
               value={typeFilter}

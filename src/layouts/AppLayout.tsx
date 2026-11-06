@@ -77,11 +77,20 @@ export function AppLayout({
             className="nav-item logout-button"
             onClick={onLogout}
           >
-            <Icon name = "arrow-right" />
+            <Icon name="arrow-right" />
             <span>Sign out</span>
           </button>
         </div>
       </aside>
+
+      {mobileOpen && (
+        <button
+          type="button"
+          className="sidebar-backdrop"
+          aria-label="Close navigation menu"
+          onClick={() => setMobileOpen(false)}
+        />
+      )}
 
       <div className="main-shell">
         <header className="topbar">
